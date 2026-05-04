@@ -22,9 +22,10 @@
     </style>
 </head>
 <body>
-    <textarea id="editor" autofocus placeholder="等待语音输入..."></textarea>
+    <textarea id="editor" autofocus placeholder="v3等待语音输入..."></textarea>
     
     <script>
+        /*这是旧版，用f2
         const editor = document.getElementById('editor');
         
         // 核心监听器：只要收到 F2 信号，瞬间清零！
@@ -36,6 +37,20 @@
         });
 
         // 保持焦点永远在输入框内
+        document.addEventListener('click', () => editor.focus());
+        */
+        const editor = document.getElementById('editor');
+        
+        // 核心监听器：放弃 F 键，改用更底层的 Alt + C
+        document.addEventListener('keydown', function(e) {
+            // 只要同时按下了 Alt 键，且按下的字母是 c 或 C
+            if (e.altKey && e.key.toLowerCase() === 'c') {
+                editor.value = '';     // 瞬间清空
+                e.preventDefault();    // 阻断默认行为
+            }
+        });
+
+        // 保持焦点
         document.addEventListener('click', () => editor.focus());
     </script>
 </body>

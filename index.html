@@ -38,7 +38,9 @@
 
         // 保持焦点永远在输入框内
         document.addEventListener('click', () => editor.focus());
-        */
+
+
+     这是第二版，用alt+c，还是不行
         const editor = document.getElementById('editor');
         
         // 核心监听器：放弃 F 键，改用更底层的 Alt + C
@@ -52,6 +54,21 @@
 
         // 保持焦点
         document.addEventListener('click', () => editor.focus());
+           */
+        
+        const editor = document.getElementById('editor');
+        
+        // 核心监听器：改用绝对安全的 Shift + Enter
+        document.addEventListener('keydown', function(e) {
+            // 如果按下了 Shift 键，并且按下的主键是 Enter (回车)
+            if (e.shiftKey && e.key === 'Enter') {
+                editor.value = '';     // 瞬间清空
+                e.preventDefault();    // 阻断默认行为（防止它真的打出一个换行符）
+            }
+        });
+
+        document.addEventListener('click', () => editor.focus());
+    
     </script>
 </body>
 </html>

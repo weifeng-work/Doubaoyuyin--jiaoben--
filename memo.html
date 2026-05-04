@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body, html { margin: 0; padding: 0; background: #1e1e1e; overflow: hidden; }
+        /* 充满全屏的输入框，专为大屏/横屏优化 */
+        #editor {
+            width: 100vw; 
+            height: 100vh; 
+            box-sizing: border-box;
+            font-size: 36px;       /* 超大字体，看着舒服 */
+            background: #1e1e1e; 
+            color: #d4d4d4; 
+            border: none; 
+            outline: none; 
+            padding: 30px;
+            resize: none;          /* 禁止拖拽边缘 */
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="editor" autofocus placeholder="等待语音输入..."></textarea>
+    
+    <script>
+        const editor = document.getElementById('editor');
+        
+        // 核心监听器：只要收到 F9 信号，瞬间清零！
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F9') {
+                editor.value = '';     // 变量清空
+                e.preventDefault();    // 阻断默认行为
+            }
+        });
+
+        // 保持焦点永远在输入框内
+        document.addEventListener('click', () => editor.focus());
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body, html { margin: 0; padding: 0; background: #1e1e1e; font-family: sans-serif; }
+        /* 上半部分：文本输入区 */
+        #editor {
+            width: 100vw; height: 50vh; box-sizing: border-box;
+            font-size: 30px; background: #1e1e1e; color: #fff; 
+            border: none; border-bottom: 2px solid #555; outline: none; padding: 20px;
+        }
+        /* 下半部分：侦察监控区 */
+        #debug {
+            width: 100vw; height: 50vh; padding: 20px; box-sizing: border-box;
+            font-size: 20px; color: #0f0; background: #000; overflow-y: auto;
+            font-family: monospace;
+        }
+        .highlight { color: #ff3366; font-weight: bold; font-size: 24px; }
+    </style>
+</head>
+<body>
+    <textarea id="editor" autofocus placeholder="请在这里测试打字..."></textarea>
+    <div id="debug">🔍 探针已启动，正在监听底层的系统按键...<br></div>
+    
+    <script>
+        const editor = document.getElementById('editor');
+        const debug = document.getElementById('debug');
+
+        // 监听浏览器接收到的每一个按键
+        document.addEventListener('keydown', function(e) {
+            // 将按键的真实状态打印到屏幕下方
+            let log = `▶ 收到信号: Key=[<b>${e.key}</b>], Code=[${e.code}], Shift按下=[${e.shiftKey}] <br>`;
+            
+            // 如果成功识别到 Shift + Enter
+            if (e.shiftKey && e.key === 'Enter') {
+                log += `<span class="highlight">🔥 探针报警：成功捕获 Shift + Enter！正在触发清空！</span><br>`;
+                editor.value = '';     // 执行清空
+                e.preventDefault();    // 阻断默认换行
+            }
+            
+            debug.innerHTML = log + debug.innerHTML; // 最新日志在最上面显示
+        });
+
+        document.addEventListener('click', () => editor.focus());
+    </script>
+</body>
+</html>
